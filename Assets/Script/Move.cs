@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
+    
+
     [SerializeField] Rigidbody _rd;
     public bool isStop = false;
     public int Speed = 0;
@@ -17,11 +19,18 @@ public class Move : MonoBehaviour
     
     void Update()
     {
+        MoveO();
+    }
 
+    void MoveO()
+    {
         var front = -transform.right;
+        float z = Input.GetAxis("Horizontal");
+        Vector3 direction = _rd.transform.forward * z + front;
         if (isStop == false)
         {
-            _rd.velocity = front * Speed;
+            _rd.velocity = direction * Speed;
+            
         }
         else if (isStop == true)
         {
@@ -30,6 +39,7 @@ public class Move : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+      
         if (other.gameObject.name == "Gool")
         {
             isStop = true;
